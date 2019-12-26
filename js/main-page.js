@@ -49,153 +49,147 @@ $(document).ready(function () {
     };
 
 
-        if (scrollHeight >= 500) {
-            $('#back-to-top-button').addClass('show');
+
+
+    $('#down-arrow-container').click(function (e) {
+        e.preventDefault();
+        $('html, body').animate({
+            scrollTop: $('#recommendation-head').offset().top - 10
+        }, 790, 'easeInOutQuad'
+        );
+    });
+
+    $('#back-to-top-button').click(function (e) {
+        e.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, 300, 'easeInOutQuad');
+    });
+
+    let articleCnt = 0;
+    let onShowArticles = [];
+    let getOnshowArticlesIdFlag = 0;
+    $.post("./php/getArticlesCnt.php", 1,
+        function (data) {
+            // console.log('data = ' + data);
+            articleCnt = data;
+            // console.log('article count = ' + articleCnt);
+            if (articleCnt <= 6) {
+                for (let i = 0; i < articleCnt; i++) {
+                    onShowArticles.push(i);
+                }
+            } else {
+                let cnt = 0;
+                while (cnt < 6) {
+                    let id = parseInt(Math.random() * 1000) % articleCnt;
+                    if (!onShowArticles.includes(id)) {
+                        onShowArticles.push(id);
+                        cnt++;
+                    }
+                }
+            }
+            for (let i = 0; i < onShowArticles.length; i++) {
+                let ID = onShowArticles[i];
+                $.post("./php/getArticlesContent.php", { ID: ID },
+                    function (data) {
+                        let eleId = '#re' + (i + 1) + ' p.article-abstract';
+                        let eleTitleId = '#re' + (i + 1) + ' span.article-title';
+                        // console.log(eleId);
+                        if (data.length > 10) {
+                            data = data.slice(0, 11);
+                        }
+                        data = marked(data).split('\n')[0];
+                        let dataNoTag = data.replace(/<[^>]+>/g, "")
+                        console.log(data);
+
+                        console.log('dataNoTag = ' + dataNoTag);
+
+                        $(eleTitleId).text(dataNoTag);
+                        $(eleId).html(data);
+                    }
+                );
+            }
+        }
+    );
+
+
+    // while(!getOnshowArticlesIdFlag) {
+    //     if(getOnshowArticlesIdFlag) {
+    //         console.log('ok2');
+
+    //     }
+    // }
+});
+
+$('#down-arrow-container').click(function (e) {
+    e.preventDefault();
+    $('html, body').animate({
+        scrollTop: $('#recommendation-head').offset().top - 10
+    }, 790, 'easeInOutQuad'
+    );
+});
+
+$('#back-to-top-button').click(function (e) {
+    e.preventDefault();
+    $('html, body').animate({
+        scrollTop: 0
+    }, 300, 'easeInOutQuad');
+});
+
+let articleCnt = 0;
+let onShowArticles = [];
+let getOnshowArticlesIdFlag = 0;
+$.post("./php/getArticlesCnt.php", 1,
+    function (data) {
+        // console.log('data = ' + data);
+        articleCnt = data;
+        // console.log('article count = ' + articleCnt);
+        if (articleCnt <= 6) {
+            for (let i = 0; i < articleCnt; i++) {
+                onShowArticles.push(i);
+            }
         } else {
-            $('#back-to-top-button').removeClass('show');
-        }
-    };
-
-
-    $('#down-arrow-container').click(function (e) {
-        e.preventDefault();
-        $('html, body').animate({
-            scrollTop: $('#recommendation-head').offset().top - 10
-        }, 790, 'easeInOutQuad'
-        );
-    });
-
-    $('#back-to-top-button').click(function (e) {
-        e.preventDefault();
-        $('html, body').animate({
-            scrollTop: 0
-        }, 300, 'easeInOutQuad');
-    });
-
-    let articleCnt = 0;
-    let onShowArticles = [];
-    let getOnshowArticlesIdFlag = 0;
-    $.post("./php/getArticlesCnt.php", 1,
-        function (data) {
-            // console.log('data = ' + data);
-            articleCnt = data;
-            // console.log('article count = ' + articleCnt);
-            if (articleCnt <= 6) {
-                for (let i = 0; i < articleCnt; i++) {
-                    onShowArticles.push(i);
-                }
-            } else {
-                let cnt = 0;
-                while (cnt < 6) {
-                    let id = parseInt(Math.random() * 1000) % articleCnt;
-                    if (!onShowArticles.includes(id)) {
-                        onShowArticles.push(id);
-                        cnt++;
-                    }
+            let cnt = 0;
+            while (cnt < 6) {
+                let id = parseInt(Math.random() * 1000) % articleCnt;
+                if (!onShowArticles.includes(id)) {
+                    onShowArticles.push(id);
+                    cnt++;
                 }
             }
-            for(let i = 0; i < onShowArticles.length; i++) {
-                let ID = onShowArticles[i];
-                $.post("./php/getArticlesContent.php", {ID: ID}, 
-                    function (data) {
-                        let eleId = '#re' + (i + 1) + ' p.article-abstract';
-                        let eleTitleId = '#re' + (i + 1) + ' span.article-title';
-                        // console.log(eleId);
-                        if(data.length > 10) {
-                            data = data.slice(0, 11);    
-                        }
-                        data = marked(data).split('\n')[0];
-                        let dataNoTag = data.replace(/<[^>]+>/g, "")
-                        console.log(data);
-                        
-                        console.log('dataNoTag = ' + dataNoTag);
-                        
-                        $(eleTitleId).text(dataNoTag);
-                        $(eleId).html(data);
-                    }
-                );
-            }
         }
-    );
+        for (let i = 0; i < onShowArticles.length; i++) {
+            let ID = onShowArticles[i];
+            $.post("./php/getArticlesContent.php", { ID: ID },
+                function (data) {
+                    let containerId = '#re' + (i + 1);
+                    let eleId = '#re' + (i + 1) + ' p.article-abstract';
+                    let eleTitleId = '#re' + (i + 1) + ' span.article-title';
+                    // console.log(eleId);
+                    if (data.length > 10) {
+                        data = data.slice(0, 11);
+                    }
+                    data = marked(data).split('\n')[0];
+                    let dataNoTag = data.replace(/<[^>]+>/g, "")
+                    console.log(data);
 
-    
+                    console.log('dataNoTag = ' + dataNoTag);
+
+                    $(containerId).data('articleid', ID);
+                    $(eleTitleId).text(dataNoTag);
+                    $(eleId).html(data);
+                }
+            );
+        }
+    }
+);
+
+
     // while(!getOnshowArticlesIdFlag) {
     //     if(getOnshowArticlesIdFlag) {
     //         console.log('ok2');
-            
+
     //     }
     // }
-});
 
-    $('#down-arrow-container').click(function (e) {
-        e.preventDefault();
-        $('html, body').animate({
-            scrollTop: $('#recommendation-head').offset().top - 10
-        }, 790, 'easeInOutQuad'
-        );
-    });
-
-    $('#back-to-top-button').click(function (e) {
-        e.preventDefault();
-        $('html, body').animate({
-            scrollTop: 0
-        }, 300, 'easeInOutQuad');
-    });
-
-    let articleCnt = 0;
-    let onShowArticles = [];
-    let getOnshowArticlesIdFlag = 0;
-    $.post("./php/getArticlesCnt.php", 1,
-        function (data) {
-            // console.log('data = ' + data);
-            articleCnt = data;
-            // console.log('article count = ' + articleCnt);
-            if (articleCnt <= 6) {
-                for (let i = 0; i < articleCnt; i++) {
-                    onShowArticles.push(i);
-                }
-            } else {
-                let cnt = 0;
-                while (cnt < 6) {
-                    let id = parseInt(Math.random() * 1000) % articleCnt;
-                    if (!onShowArticles.includes(id)) {
-                        onShowArticles.push(id);
-                        cnt++;
-                    }
-                }
-            }
-            for(let i = 0; i < onShowArticles.length; i++) {
-                let ID = onShowArticles[i];
-                $.post("./php/getArticlesContent.php", {ID: ID}, 
-                    function (data) {
-                        let containerId = '#re' + (i + 1);
-                        let eleId = '#re' + (i + 1) + ' p.article-abstract';
-                        let eleTitleId = '#re' + (i + 1) + ' span.article-title';
-                        // console.log(eleId);
-                        if(data.length > 10) {
-                            data = data.slice(0, 11);    
-                        }
-                        data = marked(data).split('\n')[0];
-                        let dataNoTag = data.replace(/<[^>]+>/g, "")
-                        console.log(data);
-                        
-                        console.log('dataNoTag = ' + dataNoTag);
-
-                        $(containerId).data('articleid', ID);
-                        $(eleTitleId).text(dataNoTag);
-                        $(eleId).html(data);
-                    }
-                );
-            }
-        }
-    );
-
-    
-    // while(!getOnshowArticlesIdFlag) {
-    //     if(getOnshowArticlesIdFlag) {
-    //         console.log('ok2');
-            
-    //     }
-    // }
-});
 

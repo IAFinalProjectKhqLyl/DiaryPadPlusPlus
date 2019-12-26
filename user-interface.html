@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC&display=swap" rel="stylesheet">
     <title>User Interface</title>
     <script>
         window.addEventListener('pageshow', function (event) {
@@ -22,6 +23,7 @@
     <link rel="stylesheet" href="./materialize/css/materialize.min.css">
     <link rel="stylesheet" href="./animate.css/animate.min.css">
     <link rel="stylesheet" href="./css/scrollbar-and-selection.css">
+    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="./js/jquery-3.4.1.min.js"></script>
     <script src="./materialize/js/materialize.min.js"></script>
     <script src="./js/wow.min.js"></script>
@@ -32,24 +34,55 @@
     <div id="Container">
         <div id="user-header" class="z-depth-2">
             <div id="header-img">
+                <!--这个是用来放用户头像的-->
                 <div id="header-user-icon">
                     <img src="./img/bird.jpg" alt="">
                 </div>
             </div>
             <div id="header-info">
                 <div id="header-info-title">
-                    <!-- <h3>Mimori</h3> -->
+                    <!--下面这个span是用来放用户名的-->
+                    <span class="user-name">ReTayE</span>
+
+                    <!--用户个人信息标签-->
+                    <span class="tags">
+                        <span class="chip">
+                            <i class="fa fa-tag"></i>
+                            SZU
+                        </span>
+                        <span class="chip">
+                            <i class="fa fa-tag"></i>
+                            Computer Science
+                        </span>
+                        <span class="chip">
+                            <i class="fa fa-tag"></i>
+                            ICPC
+                        </span>
+                        <span class="chip">
+                            <i class="fa fa-tag"></i>
+                            Bilibili
+                        </span>
+                    </span>
+                    <!--用户个人信息标签-->
+
                 </div>
             </div>
         </div>
+
+        <!--用户已发布的文章-->
         <div id="release-aritcles-container">
-            <div id="release-articles-base" class="z-depth-2">
-
+            <!--data-releasearticleid对应的是文章在数据库中的编号.id是为了方便js获取元素而存在的-->
+            <!--文章内容直接放在每一个div中的-->
+            <div class="release-articles-base z-depth-2" id="release-article-1" data-releasearticleid="">
+                <h4>Article 1</h4>
+                <p>This is the content of the first article</p>
             </div>
+            <div class="release-articles-base z-depth-2" id="release-article-2" data-releasearticleid=""></div>
+            <div class="release-articles-base z-depth-2" id="release-article-3" data-releasearticleid=""></div>
+            <div class="release-articles-base z-depth-2" id="release-article-4" data-releasearticleid=""></div>
+            <div class="release-articles-base z-depth-2" id="release-article-5" data-releasearticleid=""></div>
         </div>
-        <div id="other-information-container" class="z-depth-2">
 
-        </div>
     </div>
 </body>
 

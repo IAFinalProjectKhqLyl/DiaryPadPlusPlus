@@ -286,4 +286,5 @@ html {
 
 #back-to-top-button.show {
     opacity: 1 !important;
+    visibility: visible !important;
 }
