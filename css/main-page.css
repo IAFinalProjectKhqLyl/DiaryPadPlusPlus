@@ -31,7 +31,12 @@ main {
     margin-top: 60px;
     height: 300px;
     width: 50%;
+    overflow: hidden;
 }
+
+/* li{
+    font-family: 'Noto Serif SC', serif;
+} */
 
 #recommendation-head {
     margin: 0 auto;
@@ -98,6 +103,7 @@ main {
 }
 
 .article-abstract {
+    height: 10px !important;
     width: 85%;
     text-justify: inter-ideograph;
     text-indent: 2em;
@@ -179,44 +185,52 @@ main {
 @keyframes tool-move-in-animation {
     form {
         left: 120%;
-        display: hidden;
+        width: 0;
+        height: 0;
     }
     to {
         left: 95%;
-        display: visible;
+        width: 70px;
+        height: 150px;
     }
 }
 
 @-webkit-keyframes tool-move-in-animation {
     form {
         left: 120%;
-        display: hidden;
+        width: 0;
+        height: 0;
     }
     to {
         left: 95%;
-        display: visible;
+        width: 70px;
+        height: 150px;
     }
 }
 
 @keyframes tool-move-out-animation {
     form {
         left: 95%;
-        display: visible;
+        width: 70px;
+        height: 150px;
     }
     to {
         left: 120%;
-        display: hidden;
+        width: 0;
+        height: 0;
     }
 }
 
 @-webkit-keyframes tool-move-out-animation {
     form {
         left: 95%;
-        display: visible;
+        width: 70px;
+        height: 150px;
     }
     to {
         left: 120%;
-        display: hidden;
+        width: 0;
+        height: 0;
     }
 }
 
@@ -272,5 +286,4 @@ html {
 
 #back-to-top-button.show {
     opacity: 1 !important;
-    visibility: visible !important;
 }

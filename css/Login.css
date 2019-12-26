@@ -116,3 +116,12 @@ a:hover{text-decoration: none;}
 	margin-top: 0px;
 	color: red;
 }
+.ErrorMess{
+	color: red;
+	background-color: white;
+}
+
+.WarningMess{
+	color: #ffcc00;
+	background-color: white;
+}
