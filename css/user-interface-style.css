@@ -4,7 +4,7 @@ html, body {
 }
 
 #Container {
-    width: 75%;
+    width: 55%;
     height: 100%;
     margin: 0 auto;
     margin-top: 0;
@@ -51,7 +51,7 @@ html, body {
 
 #release-aritcles-container {
     float: left;
-    margin-top: 5vh;
+    margin-top: 3vh;
     width: 100%;
     height: 40vh;
     border-radius: 10px;
@@ -59,20 +59,11 @@ html, body {
 
 #release-articles-base {
     height: 100%;
-    width: 75%;
+    width: 100%;
     border-radius: inherit;
     background-color: white;
 }   
 
-#other-information-container {
-    position: absolute;
-    left: 70%;
-    margin-top: 5vh;
-    width: 17%;
-    height: 50%;
-    border-radius: 10px;
-    background-color: white;
-}
 
 .release-aritcles {
     width: 100%;
@@ -85,4 +76,32 @@ html, body {
 
 html {
     overflow-x: hidden;
+}
+
+.release-articles-base {
+    font-size: 40px;
+    padding-left: 60px;
+    padding-top: 30px;
+    height: 300px;
+    border-radius: 10px;
+    margin-bottom: 3vh;
+}
+
+.release-articles-base h4 {
+    font-weight: 300;
+}
+
+.release-articles-base p {
+    font-size: 20px;
+    font-weight: lighter;
+    font-family: 'Noto Serif SC', serif;
+}
+
+.user-name {
+    font-size: 48px;
+    font-weight: 200;
+}
+
+.tags {
+    margin-left: 30px;
 }
