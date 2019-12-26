@@ -55,17 +55,36 @@
 
         $(document).ready(function () {
             get_cookie();
+
+            let time;
+            if($(window).width()<=996){
+                time=2000;
+            }
+            else{
+                time=5000;
+            }
+
+
+            $(window).resize(function () {
+                if($(window).width()<=996){
+                    time=2000;
+                }
+                else{
+                    time=5000;
+                }
+            });
             $("#loginButton").click(function () {
 
                 var user = $("#user-name").val();
                 var pass = $("#password").val();
                 if (user == "" || user == null || pass == null || pass == "") {
                     if (user == "" || user == null) {
-                        Materialize.toast("Username can't be empty!", 5000);
+                        Materialize.toast("Username can't be empty!", time,"ErrorMess");
                         $("#user-name").attr("data-tooltip", "Username can't be empty!");
                         //$("#erroruser").text("Username/Email can't be empty!");
                     }
                     if (pass == "" || pass == null) {
+                        Materialize.toast("Password can't be empty!", time,"ErrorMess");
                         Materialize.toast("Password can't be empty!", 5000);
 
                         //$("#errorpass").text("Password can't be empty!");
@@ -80,6 +99,32 @@
                             window.location.href = "main-page.html";
                         }
                         else {
+                            $("#password").removeClass("valid");
+                            $("#password").removeClass("validate");
+                            $("#password").addClass("invalid");
+                            $("#password").attr("type","text");
+                            Materialize.toast("Your password is wrong, please check!",time,"ErrorMess");
+                        }
+                    });
+                }
+            });
+
+            $("#password").focus(function () {
+               $("#password").attr("type","password");
+            });
+
+            $("#user-name").blur(function () {
+                var username = $("#user-name").val();
+                if(username!=""||username!=NULL) {
+                    $.post("./php/findName", {username: username}, function (data) {
+                        if (data == 1) {
+                            $("#user-name").removeClass("invalid");
+                            $("#user-name").addClass("valid");
+                        } else {
+                            $("#user-name").removeClass("valid");
+                            $("#user-name").removeClass("validate");
+                            $("#user-name").addClass("invalid");
+                            Materialize.toast("It seems that you haven't registered, why not join us?", time, "WarningMess");
                             alert("Your username or your password may be wrong");
                         }
                     });
@@ -109,8 +154,8 @@
 
 
 
-            <form class="col s12" action="loginConfirm.php" method="post">
-                <div class="row">
+            <form class="col s12" action="" method="post">
+                <div class="row1">
                     <div class="input-field col s12">
                         <i class="fa fa-user-circle-o prefix"></i>
                         <input type="text" id="user-name" class="validate tooltipped" data-position="right"
@@ -119,8 +164,8 @@
                     </div>
                     <div class="input-field col s12">
                         <i class="fa fa-lock prefix"></i>
-                        <input type="password" id="password" class="validate tooltipped" data-position="right"
-                            data-delay="50" data-tooltip="Please input password">
+
+                        <input type="password" id="password" class="validate tooltipped" data-position="right" data-delay="50" data-tooltip="Please input password">
                         <label for="password">Password</label>
                     </div>
                 </div>
@@ -142,7 +187,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div>
+                    <div class="row">
 
                         <a class="waves-effect waves-light btn col s12 cyan" href="main-page.html">View as guest</a>
 

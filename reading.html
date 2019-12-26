@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+        // var flag = 0;
+        //每次进入页面都强制刷新
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                location.reload();
+            } else {
+                console.log('reload');
+
+                if (sessionStorage.getItem('refresh') === 'true') {
+                    location.reload();
+                }
+            }
+            sessionStorage.removeItem('refresh');
+        });
+
+
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Article</title>
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./materialize/js/materialize.min.js"></script>
+    <script src="./js/wow.min.js"></script>
+    <script src="./js/jquery.backstretch.min.js"></script>
+    <script>new WOW().init()</script>
+    <link href="./css/reading.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="./materialize/css/materialize.min.css">
+    <link href="./font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC&display=swap" rel="stylesheet">
+    <link href="./css/scrollbar-and-selection.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./animate.css/animate.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Noto+Serif+TC&display=swap" rel="stylesheet">
+    <script src="./editor.md/editormd.min.js"></script>
+    <script src="./editor.md/lib/marked.min.js"></script>
+    <script src="./editor.md/lib/prettify.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var content = $("#content").text();
+            $.post('php/getArticle.php', { content: content }, function (data) {
+                if (data) {
+                    $('#aux-textarea').val(data);
+                    editormd.markdownToHTML('content', {
+                        htmlDecode: 'style,script,iframe',
+                        emoji: false,
+                        taskList: false,
+                        tex: false,
+                        flowChart: false,
+                        sequenceDiagram: false
+                    });
+                } else {
+                    $("#content").text("sorry, the article is not exist.")
+                }
+            })
+
+
+            $(".brand-logo").click(function () {
+                $.post('php/iflogin.php', {}, function (data) {
+                    if (data == 1) {
+                        window.location.href = "main-page.html";
+                        window.alert("You have login!");
+                    }
+                    else {
+                        window.location.href = "login.html";
+                    }
+                })
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper light-blue accent-3">
+            <a href="login.html" class="brand-logo">
+                <div
+                    style="background-image: url('./img/logo3.png'); background-size: contain; width: 50px; height: 50px; margin-left: 20px; margin-top: 7px;">
+                </div>
+            </a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="main-page.html">Main page</a></li>
+                <li><a href="editor.html">Edit your article</a></li>
+                <li><a href="user-interface.html">My place</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="Container">
+        <div id="content-container">
+            <div id="content">
+                <textarea id="aux-textarea" style="display: none;"></textarea>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

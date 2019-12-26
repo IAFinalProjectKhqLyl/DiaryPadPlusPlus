@@ -26,10 +26,13 @@ if($row_cnt == 0) {
 $aid = $aid + 1;
 
 $to_submit_article = $_POST['article'];
-echo $to_submit_article;
+$to_submit_article = addslashes($to_submit_article);
+//echo $to_submit_article;
 $query = "INSERT INTO article VALUES ('$username', '$aid', '$to_submit_article')";
 
-$connection->query($query);
+// echo $query;
+
+$flag = mysqli_query($connection, $query);
 // echo $to_submit_article;
-echo 1;
+echo $flag;
 ?>
