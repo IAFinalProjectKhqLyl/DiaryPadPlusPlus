@@ -45,7 +45,6 @@ $(document).ready(function () {
                 window.location.href = './main-page.html'
             },
             summit: function () {
-                // alert('dddddddlakdsjf');
                 let txt = editor.getMarkdown();
                 $.post("./php/submitArticle.php", { article: txt }, function (data) {
                     alert(data);

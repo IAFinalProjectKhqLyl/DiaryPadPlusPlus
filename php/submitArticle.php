@@ -30,7 +30,7 @@ $to_submit_article = addslashes($to_submit_article);
 //echo $to_submit_article;
 $query = "INSERT INTO article VALUES ('$username', '$aid', '$to_submit_article')";
 
-echo $query;
+// echo $query;
 
 $flag = mysqli_query($connection, $query);
 // echo $to_submit_article;
